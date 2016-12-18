@@ -5,9 +5,7 @@ if (!isset($_POST))
 {
     header("Location:./index.html");
 }
-//first tokenize and split string
-//then add to index
-//after that upload file
+
 
 
 //here comes upload file:

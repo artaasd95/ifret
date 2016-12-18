@@ -22,6 +22,6 @@ session_start();
     
     $prgct=preg_split('/[,.\s;]+/', $content);
     var_dump($prgct);
-    print_r($prgct);
+    
     
 ?>

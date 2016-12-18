@@ -1,5 +1,5 @@
 <?php
-	//should open mongod.exe
-    $connection=new Mongo();
+    $connection=new MongoClient();
+	$db=$connection->ifret;
 	?>
     
