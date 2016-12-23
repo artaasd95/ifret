@@ -5,11 +5,11 @@ session_start();
 //    header("Location:./index.html");
 //}
     $pointer=0;
-    //$file="./test.txt";
-    $file=$_SESSION["filepath"];
+    $file="./test.txt";
+    //$file=$_SESSION["filepath"];
+    $file_name="test";
     echo "$file";
     $content=file_get_contents($file);
-    
     
 
 $prgct=preg_split('/[,.\s;]+/', $content);
@@ -39,13 +39,32 @@ $prgct=preg_split('/[,.\s;]+/', $content);
 );
     $cont_nostopwrd=array_diff($prgct,$stopwords );
     
-    var_dump($cont_nostopwrd);
+    //var_dump($cont_nostopwrd);
+    $keywords=array();
     
     foreach ($cont_nostopwrd as $item)
     {
-        echo stem_english($item)."\n";
+        $newitem=stem_english($item)."\n"; //stemming
+        array_push($keywords, $newitem);
     }
-
+    //var_dump($keywords);
+    //print_r($keywords);
+    //inserting document address to database and getting doc number:
+    
+    require 'connect.php';
+    echo $db;
+    $count=$db->docs->count();
+    echo "count: $count";
+    
+    $record['filename']=$file_name;
+    $record['filepath']=$file;
+    $record['docnum']=$count;
+    
+    $result=$db->docs->insert($record);
+    if ($result)
+    {
+        echo "\n done";
+    }
 ?>
 
 
