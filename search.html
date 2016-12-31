@@ -1,0 +1,32 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="search.css">
+</head>
+
+<body>
+    <div class="container" align="center">
+        <form action="search.php" method="POST">
+            <div class="row">
+                <h1>ifret <span class=" glyphicon glyphicon-search"></span></h1>
+                <h5>Search in ifret:</h5>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-6">
+                        <input type="text" name="query" class="search-query form-control" placeholder="Search" />
+                        <span class="input-group-btn">
+                                    <button class="btn btn-danger" type="submit">
+                                        <span class=" glyphicon glyphicon-search"></span>
+                        </button>
+
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
