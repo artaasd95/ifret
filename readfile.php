@@ -1,16 +1,15 @@
 <?php
 session_start();
-//if(!isset($_SESSION["filepath"]))
-//{
-//    header("Location:./index.html");
-//}
+if (!isset($_SESSION["filepath"])) {
+    header("Location:./index.html");
+}
     $pointer=0;
-    $file="./test.txt";
-    //$file=$_SESSION["filepath"];
-    $file_name="test";
+    //$file="./test.txt";
+    $file=$_SESSION["filepath"];
+    $file_name=$_SESSION['filename'];
     echo "$file";
     $content=file_get_contents($file);
-    
+
 
 $prgct=preg_split('/[,.\s;]+/', $content);
     //here comes deleting stopwords
@@ -37,36 +36,33 @@ $prgct=preg_split('/[,.\s;]+/', $content);
     "wouldn't", 'you', "you'd", "you'll", "you're", "you've", 'your', 'yours',
     'yourself', 'yourselves', 'zero'
 );
-    $cont_nostopwrd=array_diff($prgct,$stopwords );
-    
+    $cont_nostopwrd=array_diff($prgct, $stopwords);
+
     //var_dump($cont_nostopwrd);
     $keywords=array();
-    
-    foreach ($cont_nostopwrd as $item)
-    {
+
+    foreach ($cont_nostopwrd as $item) {
         $newitem=stem_english($item)."\n"; //stemming
         array_push($keywords, $newitem);
     }
+    $_SESSION['keywords']=$keywords;
     //var_dump($keywords);
     //print_r($keywords);
     //inserting document address to database and getting doc number:
-    
+
     require 'connect.php';
     echo $db;
     $count=$db->docs->count();
     echo "count: $count";
-    
+    $count=$count++;
+    $_SESSION['docnum']=$count;
+
     $record['filename']=$file_name;
     $record['filepath']=$file;
     $record['docnum']=$count;
-    
+
     $result=$db->docs->insert($record);
-    if ($result)
-    {
+    if ($result) {
         echo "\n done";
+        header("Location:./insert_index.php");
     }
-?>
-
-
-    
-    

@@ -1,19 +1,21 @@
 <?php
+    session_start();
     require 'connect.php';
-    echo $db;
-    $term="fill";
-    $doc_num=5;
-    $positin[0]=15;
-    $position[1]=40;
-    
-    $record['term']=$term;
-    $record['document']=$doc_num;
-    $position['position']=$position;
-    $result=$db->invindex->insert($record);
-    if ($result)
-    {
+    if (!isset($_SESSION['keywords'])) {
+        //header("Location:./index.html");
+    }
+    $keywords=$_SESSION['keywords'];
+    $docnum=$_SESSION['docnum'];
+    $position=0;
+    //var_dump($_SESSION['keywords']);
+    $cmdcou=0;
+    foreach ($keywords as $item) {
+        //$cmdlst['$cmdcou']="update(".array("term" => $item ,'$addToSet' => array("document_number" => $docnum)).");";
+        $result=$db->invindex->findAndModify(array("term" => $item),
+          array('$set' => array("document_number" => $docnum)),null, array("upsert" => true));
+    }
+    if ($result) {
         echo "done";
     }
-
-
+    else echo "error";
 ?>

@@ -1,5 +1,5 @@
 <?php
-    $connection=new MongoClient();
-	$db=$connection->ifret;
-	?>
+        $connection=new MongoClient();
+    $db=$connection->ifret;
+    ?>
     
