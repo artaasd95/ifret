@@ -5,6 +5,7 @@ if(!isset($_SESSION['documents']))
   //header("Location:./search.html");
 }
 $gottendocs=$_SESSION['documents'];
+var_dump($gottendocs);
 ?>
 <html lang="en">
 
@@ -27,7 +28,7 @@ $gottendocs=$_SESSION['documents'];
           <?php foreach($gottendocs as $gotenitem)
               {
                   echo "<div class=\"col-sm-10\" style=\"font-family: Times New Roman, Times, serif; height: 30px;\">";
-                    echo "<b>".$gotenitem['name']."</b>";
+                    \\echo "<b>".$gotenitem['name']."</b>";
                     //link
                   echo "</div>";
               }  ?>

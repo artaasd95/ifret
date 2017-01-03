@@ -42,9 +42,11 @@ $prgct=preg_split('/[,.\s;]+/', $content);
     $keywords=array();
 
     foreach ($cont_nostopwrd as $item) {
-        $newitem=stem_english($item)."\n"; //stemming
+        $newitem=stem_english($item);//."\n"; //stemming
+        $newitem=strtolower($newitem);
         array_push($keywords, $newitem);
     }
+    $something=array_shift($keywords);
     $_SESSION['keywords']=$keywords;
     //var_dump($keywords);
     //print_r($keywords);

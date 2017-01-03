@@ -14,8 +14,5 @@
         $result=$db->invindex->findAndModify(array("term" => $item),
           array('$set' => array("document_number" => $docnum)),null, array("upsert" => true));
     }
-    if ($result) {
-        echo "done";
-    }
-    else echo "error";
+    header("Location:./uploadfile.html");
 ?>

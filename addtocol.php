@@ -4,9 +4,6 @@ session_start();
 if (!isset($_POST)) {
     header("Location:./index.html");
 }
-
-
-
 //here comes upload file:
 
     $fileadd="";  //this should be gotten from post of get method(file address)
@@ -51,3 +48,4 @@ if ($uploadOk == 0) {
     }
 }
 session_write_close();
+?>

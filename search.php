@@ -9,7 +9,6 @@ if(!isset($_POST))
 
   $prgct=preg_split('/[,.\s;]+/', $content);
       //here comes deleting stopwords
-      echo gettype($prgct), "\n";
       $stopwords = array( 'a', 'about', 'above', 'after', 'again', 'against',
       'all', 'am', 'an', 'and', 'any', 'are', "aren't", 'as', 'at', 'be',
       'because', 'been', 'before', 'being', 'below', 'between', 'both', 'but',
@@ -38,12 +37,26 @@ if(!isset($_POST))
       $keywords=array('NAN');
 
       foreach ($cont_nostopwrd as $item) {
-          $newitem=stem_english($item)."\n"; //stemming
+          $newitem=stem_english($item); //stemming
+          $newitem=strtolower($newitem);
           array_push($keywords, $newitem);
       }
+      $newkeywords=array_shift($keywords);
+      foreach ($keywords as $keywd)
+      {
+        $quefunc="function() {
+          return this.term == '$keywd';
+        }";
+        //var_dump($quefunc);
+        //$foundeddoc[$pointer]=$db->invindex->find(array('$where' => $quefunc));
+        $foundeddoc=$db->invindex->find(array('term' => $keywd));
 
-      $foundeddoc=$db->invindex->find("term" => $keywords);
-
-
+      }
+      $_SESSION['documents']=$foundeddoc;
+      //var_dump($foundeddoc);
+      foreach ($foundeddoc as $doc)
+      {
+        var_dump($doc);
+      }
 
 ?>
