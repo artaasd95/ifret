@@ -42,6 +42,7 @@ if(!isset($_POST))
           array_push($keywords, $newitem);
       }
       $newkeywords=array_shift($keywords);
+      $pointer=0;
       foreach ($keywords as $keywd)
       {
         $quefunc="function() {
@@ -49,22 +50,28 @@ if(!isset($_POST))
         }";
         //var_dump($quefunc);
         //$foundeddoc[$pointer]=$db->invindex->find(array('$where' => $quefunc));
-        $foundeddoc=$db->invindex->find(array('term' => $keywd));
-      }
-      $pointer=0;
-      //$_SESSION['documents']=$foundeddoc;
-      //var_dump($foundeddoc);
-      foreach ($foundeddoc as $doc)
-      {
-        $temp=$doc['document_number'];
-        $found_coll_doc=$db->docs->find(array('docnum' => $temp));
+        $foundeddoc[$pointer]=$db->invindex->find(array('term' => $keywd));
         $pointer++;
       }
-      $pointer=0;
-      foreach ($found_coll_doc as $doc)
+
+      //$_SESSION['documents']=$foundeddoc;
+      //var_dump($foundeddoc);
+      for ($i=0 ; $i<= $pointer; $i++)
       {
-        $docs_to_send[$pointer]=$doc;
+        foreach ($foundeddoc[$i] as $doc)
+        {
+          $temp=$doc['document_number'];
+          $found_coll_doc[$i]=$db->docs->find(array('docnum' => $temp));
+        }
+      }
+      for ($i=0 ; $i<=$pointer; $i++)
+      {
+        foreach ($found_coll_doc[$i] as $doc)
+        {
+          $docs_to_send[$i]=$doc;
+        }
       }
       $_SESSION['documents']=$docs_to_send;
+      $_SESSION['pointer']=$pointer;
       header("Location:./result.php");
 ?>
