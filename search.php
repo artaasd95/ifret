@@ -50,13 +50,21 @@ if(!isset($_POST))
         //var_dump($quefunc);
         //$foundeddoc[$pointer]=$db->invindex->find(array('$where' => $quefunc));
         $foundeddoc=$db->invindex->find(array('term' => $keywd));
-
       }
-      $_SESSION['documents']=$foundeddoc;
+      $pointer=0;
+      //$_SESSION['documents']=$foundeddoc;
       //var_dump($foundeddoc);
       foreach ($foundeddoc as $doc)
       {
-        var_dump($doc);
+        $temp=$doc['document_number'];
+        $found_coll_doc=$db->docs->find(array('docnum' => $temp));
+        $pointer++;
       }
-
+      $pointer=0;
+      foreach ($found_coll_doc as $doc)
+      {
+        $docs_to_send[$pointer]=$doc;
+      }
+      $_SESSION['documents']=$docs_to_send;
+      header("Location:./result.php");
 ?>
