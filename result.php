@@ -5,15 +5,7 @@ if(!isset($_SESSION['documents']))
   //header("Location:./search.html");
 }
 $gottendocs=$_SESSION['documents'];
-$pointer=$_SESSION['pointer'];
-for ($i=0; $i < $pointer; $i++)
-{
-foreach ($gottendocs as $doc)
-  {
-    var_dump($doc);
-
-
-?>
+$pointer=$_SESSION['pointer']; ?>
 
 <html lang="en">
 
@@ -50,12 +42,25 @@ foreach ($gottendocs as $doc)
                 </div>
             </div>
         </div>
+
+
+<?php
+for ($i=0; $i < $pointer; $i++)
+{
+foreach ($gottendocs as $doc)
+  {
+    //var_dump($doc);
+
+?>
+
         <?php echo "<div class=\"col-sm-10\">";
   				 echo "<div class=\"form-group\" style=\"margin-top: 15px\" >"
                 ."<h4>File name: ".$doc['filename'].
                 "<a href="; echo "\"".$doc['filepath']."\">".
                   "<span class=\"glyphicon glyphicon-file\"></span></a></h4>";
                   echo "</div>";
-        echo "</div>";  } }?>
+        echo "</div>";  } }
+        session_write_close();
+        ?>
 </body>
 </html>

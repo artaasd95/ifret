@@ -42,6 +42,7 @@ if(!isset($_POST))
           array_push($keywords, $newitem);
       }
       $newkeywords=array_shift($keywords);
+      $foundeddoc= array();
       $pointer=0;
       foreach ($keywords as $keywd)
       {
@@ -50,28 +51,40 @@ if(!isset($_POST))
         }";
         //var_dump($quefunc);
         //$foundeddoc[$pointer]=$db->invindex->find(array('$where' => $quefunc));
-        $foundeddoc[$pointer]=$db->invindex->find(array('term' => $keywd));
+        $item=$db->invindex->find(array('term' => $keywd)); //done finding doc
+        //var_dump($item);
+        array_push($foundeddoc, $item);
         $pointer++;
       }
-
+      $found_coll_doc=array();
+      $docs_to_send=array();
       //$_SESSION['documents']=$foundeddoc;
       //var_dump($foundeddoc);
-      for ($i=0 ; $i<= $pointer; $i++)
+      foreach ($foundeddoc as $docitem)
       {
-        foreach ($foundeddoc[$i] as $doc)
+        foreach ($docitem as $doc)
         {
+          //var_dump($doc); //done finding items of founded doc
           $temp=$doc['document_number'];
-          $found_coll_doc[$i]=$db->docs->find(array('docnum' => $temp));
+          //should be an array for searching in $temp array
+          foreach($temp as $tempitem)
+          {
+            $item=$db->docs->find(array('docnum' => $tempitem));
+            array_push($found_coll_doc, $item);
+          }
         }
       }
-      for ($i=0 ; $i<=$pointer; $i++)
+      //var_dump($found_coll_doc);
+      foreach ($found_coll_doc as $docitem2)
       {
-        foreach ($found_coll_doc[$i] as $doc)
+        foreach ($docitem2 as $doc)
         {
-          $docs_to_send[$i]=$doc;
+          array_push($docs_to_send, $doc);
+          //var_dump($doc);
         }
       }
       $_SESSION['documents']=$docs_to_send;
       $_SESSION['pointer']=$pointer;
+      //var_dump($docs_to_send);
       header("Location:./result.php");
 ?>
