@@ -30,7 +30,7 @@ $pointer=$_SESSION['pointer']; ?>
          border-color: #e6e6e6;">
 
             <h3>ifret</h3>
-            <div id="custom-search-input">
+            <!-- <div id="custom-search-input">
                 <div class="input-group col-md-6">
                     <input type="text" name="query" class="search-query form-control" placeholder="Search in ifret" />
                     <span class="input-group-btn">
@@ -40,26 +40,36 @@ $pointer=$_SESSION['pointer']; ?>
 
                     </span>
                 </div>
-            </div>
+            </div> -->
         </div>
 
 
 <?php
+$list_of_docs=array();
 for ($i=0; $i < $pointer; $i++)
 {
 foreach ($gottendocs as $doc)
   {
     //var_dump($doc);
 
+
 ?>
 
-        <?php echo "<div class=\"col-sm-10\">";
-  				 echo "<div class=\"form-group\" style=\"margin-top: 15px\" >"
+        <?php  if (!in_array($doc['filename'],$list_of_docs))
+            {
+
+
+              echo "<div class=\"col-sm-10\">";
+              echo "<div class=\"form-group\" style=\"margin-top: 15px\" >"
                 ."<h4>File name: ".$doc['filename'].
                 "<a href="; echo "\"".$doc['filepath']."\">".
                   "<span class=\"glyphicon glyphicon-file\"></span></a></h4>";
                   echo "</div>";
-        echo "</div>";  } }
+        echo "</div>";
+        array_push($list_of_docs,$doc['filename']);
+       }
+
+        } }
         session_write_close();
         ?>
 </body>
